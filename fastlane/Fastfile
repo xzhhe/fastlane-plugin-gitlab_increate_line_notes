@@ -1,0 +1,13 @@
+fastlane_require 'pp'
+
+lane :test do
+  gitlab_increate_line_notes(
+    gitlab_host: "https://git.in.xxx.com/api/v4",
+    gitlab_token: "xxxx",
+    projectid: "16456",
+    mrid: "33",
+    swiftlint_result_json: JSON.parse(File.read('spec/swiftlint_result_json')),
+    last_commit: "dc6b7b2f3875b338b4961eb40c878540be170bd1"
+  )
+  pp Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::GITLAB_LINT_ADD_DISCUSSIONS_LINE_NOTES]
+end

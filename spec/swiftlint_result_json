@@ -1,0 +1,20 @@
+[
+    {
+        "character": 13,
+        "file": "/Users/xiongzenghui/ci-jenkins/workspace/xxx-iOS-module-xiongzenghui/ZHUDID/ZHUDID/Classes/Haha.swift",
+        "line": 18,
+        "reason": "Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.",
+        "rule_id": "colon",
+        "severity": "Warning",
+        "type": "Colon"
+    },
+    {
+        "character": 28,
+        "file": "/Users/xiongzenghui/ci-jenkins/workspace/xxx-iOS-module-xiongzenghui/ZHUDID/ZHUDID/Classes/Haha.swift",
+        "line": 28,
+        "reason": "Force casts should be avoided.",
+        "rule_id": "force_cast",
+        "severity": "Error",
+        "type": "Force Cast"
+    }
+]

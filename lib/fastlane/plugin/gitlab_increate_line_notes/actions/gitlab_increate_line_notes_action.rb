@@ -46,8 +46,7 @@ module Fastlane
         end
 
         # 4. return
-        lint_lines = lint_lines.map(&:to_hash)
-        Actions.lane_context[SharedValues::GITLAB_INCREATE_LINE_NOTES_ACTION_NOTES] = lint_lines
+        Actions.lane_context[SharedValues::GITLAB_INCREATE_LINE_NOTES_ACTION_NOTES] = lint_lines.map(&:to_hash)
 
         # 5. 添加 mr discussion notes
         return unless lint_lines

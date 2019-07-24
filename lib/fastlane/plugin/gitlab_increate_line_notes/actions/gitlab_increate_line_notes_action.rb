@@ -146,7 +146,7 @@ module Fastlane
         head_sha = diff_refs['head_sha']
         start_sha = diff_refs['start_sha']
         lint_lines.each { |ll|
-          body = dsu.to_discussion
+          body = ll.to_discussion
           # 添加 代码行 discussion 评论
           # 需要通过 https://git.in.xxx.com/api/v4/projects/10701/merge_requests/832/notes 接口获取所有的评论
           gc.create_merge_request_discussion(

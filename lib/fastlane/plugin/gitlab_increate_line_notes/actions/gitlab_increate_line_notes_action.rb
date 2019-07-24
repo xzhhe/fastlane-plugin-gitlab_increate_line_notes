@@ -45,8 +45,12 @@ module Fastlane
           ll.line_in_positons?(notes)
         end
 
+        # 4. 添加 mr discussion notes
+        add_discussions(mr_hash, lint_lines)
+
+        # 5. return
         lint_lines = lint_lines.map(&:to_hash)
-        Actions.lane_context[SharedValues::GITLAB_INCREATE_LINE_NOTES_ACTION_NOTES] = 
+        Actions.lane_context[SharedValues::GITLAB_INCREATE_LINE_NOTES_ACTION_NOTES] = lint_lines
         lint_lines
       end
 
@@ -131,6 +135,36 @@ module Fastlane
           }
         }
         notes
+      end
+
+      def self.add_discussions(mr_hash, lint_lines)
+        return unless lint_lines
+        return if lint_lines.empty?
+
+        diff_refs = mr_hash['diff_refs']
+        base_sha = diff_refs['base_sha']
+        head_sha = diff_refs['head_sha']
+        start_sha = diff_refs['start_sha']
+        lint_lines.each { |ll|
+          body = dsu.to_discussion
+          # 添加 代码行 discussion 评论
+          # 需要通过 https://git.in.xxx.com/api/v4/projects/10701/merge_requests/832/notes 接口获取所有的评论
+          gc.create_merge_request_discussion(
+            projectid,
+            mrid,
+            body: body,
+            position: {
+              base_sha: base_sha,
+              start_sha: start_sha,
+              head_sha: head_sha,
+              position_type: 'text',
+              # old_line: ll[:old_line], # FIXME: 暂时不知道这个 old_line 干嘛的？
+              new_line: ll.line,
+              old_path: ll.old_path,
+              new_path: ll.new_path
+            }
+          )
+        }
       end
 
       def self.description
